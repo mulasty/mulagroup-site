@@ -5,14 +5,15 @@ import { LandingIcon } from "./landing-icons";
 
 export default function WhyMulaGroupSection() {
   return (
-    <section className="relative overflow-hidden py-28 sm:py-36">
+    <section id="why" aria-labelledby="why-heading" className="relative overflow-hidden py-28 sm:py-36">
       {/* Video background — full section */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
         <video
           autoPlay
           muted
           loop
           playsInline
+          poster="/ai-poster.jpg"
           className="absolute inset-0 h-full w-full object-cover"
         >
           <source src="/ai-business.mp4" type="video/mp4" />
@@ -27,7 +28,7 @@ export default function WhyMulaGroupSection() {
       {/* Content */}
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem]">
+          <h2 id="why-heading" className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem]">
             Dlaczego Mula Group
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-slate-300">

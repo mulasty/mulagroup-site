@@ -49,9 +49,13 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "/logos_Mula_Group/1000x1000-white.png",
-    shortcut: "/logos_Mula_Group/1000x1000-white.png",
-    apple: "/logos_Mula_Group/1000x1000-white.png",
+    icon: [
+      { url: "/favicon-48.webp", sizes: "48x48", type: "image/webp" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon-48.webp",
+    apple: "/logo-white.webp",
   },
   openGraph: {
     title: "Mula Group — Technology & Automation",

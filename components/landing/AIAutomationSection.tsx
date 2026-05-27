@@ -5,14 +5,14 @@ import AIChatTerminal from "./AIChatTerminal";
 
 export default function AIAutomationSection() {
   return (
-    <section className="relative py-28 sm:py-36">
+    <section id="ai" aria-labelledby="ai-heading" className="relative py-28 sm:py-36">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300/40 to-transparent dark:via-white/[0.04]" />
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid items-start gap-16 lg:grid-cols-2 lg:gap-20">
           {/* Left: content */}
           <div className="max-w-xl">
-            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-[2.5rem]">
+            <h2 id="ai-heading" className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-[2.5rem]">
               Automatyzacja AI i operacje cyfrowe
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-500 dark:text-slate-500">

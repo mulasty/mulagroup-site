@@ -1,18 +1,22 @@
 "use client";
 
+import Image from "next/image";
 import { devOpsFeatures } from "@/lib/landing-content";
 import { LandingIcon } from "./landing-icons";
 import TerminalReveal from "./TerminalReveal";
 
 export default function DevOpsInfrastructureSection() {
   return (
-    <section className="relative overflow-hidden py-28 sm:py-36">
+    <section id="devops" aria-labelledby="devops-heading" className="relative overflow-hidden py-28 sm:py-36">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img
-          src="/devops1.jpg"
+        <Image
+          src="/devops1.webp"
           alt=""
-          className="h-full w-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          loading="lazy"
         />
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-slate-950/80" />
@@ -23,7 +27,7 @@ export default function DevOpsInfrastructureSection() {
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem]">
+          <h2 id="devops-heading" className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem]">
             Infrastruktura i systemy DevOps
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-slate-400">

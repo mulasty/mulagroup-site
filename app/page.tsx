@@ -1,3 +1,5 @@
+import Navigation from "@/components/Navigation";
+import CookieConsent from "@/components/CookieConsent";
 import HeroSection from "@/components/landing/HeroSection";
 import ServicesSection from "@/components/landing/ServicesSection";
 import SecurityOperationsSection from "@/components/landing/SecurityOperationsSection";
@@ -18,9 +20,11 @@ const structuredData = {
       url: "https://mulagroup.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://mulagroup.com/logo.svg",
+        url: "https://mulagroup.com/logo-white.webp",
+        width: 256,
+        height: 256,
       },
-      sameAs: [],
+      sameAs: ["https://github.com/mulasty"],
       description:
         "Mula Group delivers enterprise DevOps, security, AI automation, and infrastructure monitoring for modern digital operations.",
     },
@@ -113,8 +117,13 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className="flex min-h-screen flex-col bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50">
-
-      <HeroSection />
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-cyan-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-950">
+        Przejdź do treści
+      </a>
+      <Navigation />
+      <CookieConsent />
+      <main id="main-content">
+        <HeroSection />
       <ServicesSection />
       <SecurityOperationsSection />
       <DevOpsInfrastructureSection />
@@ -122,7 +131,8 @@ export default function Home() {
       <EngagementModelsSection />
       <WhyMulaGroupSection />
       <FinalCTASection />
-      <SiteFooter />
+        <SiteFooter />
+      </main>
     </div>
     </>
   );

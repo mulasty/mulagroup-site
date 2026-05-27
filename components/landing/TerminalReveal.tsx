@@ -46,6 +46,18 @@ export default function TerminalReveal() {
   const containerRef = useRef<HTMLDivElement>(null);
   const startedRef = useRef(false);
 
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function runTyping() {
+    for (const cmd of COMMANDS) {
+      await sleep(cmd.delay);
+      setLines((prev) => [...prev, { text: cmd.text, color: cmd.color }]);
+      if (cmd.isFinal) setIsComplete(true);
+    }
+  }
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -59,6 +71,7 @@ export default function TerminalReveal() {
 
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Cursor blink
@@ -67,25 +80,13 @@ export default function TerminalReveal() {
     return () => clearInterval(id);
   }, []);
 
-  async function runTyping() {
-    for (const cmd of COMMANDS) {
-      await sleep(cmd.delay);
-      setLines((prev) => [...prev, { text: cmd.text, color: cmd.color }]);
-      if (cmd.isFinal) setIsComplete(true);
-    }
-  }
-
-  function sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   return (
     <div
       ref={containerRef}
-      className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-black/50 shadow-2xl shadow-black/60 backdrop-blur-2xl"
+      className="relative overflow-hidden rounded-2xl border border-slate-600 bg-slate-800/80 shadow-xl shadow-slate-300/30 backdrop-blur-2xl dark:border-white/[0.06] dark:bg-black/50 dark:shadow-black/60"
     >
       {/* Terminal header */}
-      <div className="flex items-center gap-2 border-b border-white/[0.06] bg-white/[0.02] px-5 py-3">
+      <div className="flex items-center gap-2 border-b border-slate-300 bg-slate-200/40 px-5 py-3 dark:border-white/[0.06] dark:bg-white/[0.02]">
         <div className="flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-full bg-red-400/80" />
           <span className="h-3 w-3 rounded-full bg-amber-400/80" />

@@ -11,33 +11,32 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function readTheme(): Theme {
+  if (typeof window === "undefined") return "dark";
+  const stored = localStorage.getItem("mulagroup-theme");
+  if (stored === "light" || stored === "dark") return stored;
+  if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+  return "dark";
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>(readTheme);
 
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem("mulagroup-theme") as Theme | null;
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-    } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-      setTheme("light");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
     const root = document.documentElement;
     if (theme === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
-    localStorage.setItem("mulagroup-theme", theme);
-  }, [theme, mounted]);
+  }, [theme]);
 
   function toggleTheme() {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("mulagroup-theme", next);
+      return next;
+    });
   }
 
   return (

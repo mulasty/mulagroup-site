@@ -1,15 +1,14 @@
-import ThemeToggle from "@/components/ThemeToggle";
-
 export default function HeroSection() {
   return (
-    <section className="relative z-0 flex min-h-screen flex-col justify-center overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-36">
+    <section id="hero" className="relative z-0 flex min-h-screen flex-col justify-center overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-36">
       {/* === FULL SECTION VIDEO BACKGROUND === */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
         <video
           autoPlay
           muted
           loop
           playsInline
+          poster="/hero-poster.jpg"
           className="absolute inset-0 h-full w-full object-cover"
         >
           <source src="/hero1.mp4" type="video/mp4" />
@@ -23,11 +22,6 @@ export default function HeroSection() {
             background: "linear-gradient(to top, rgba(2,6,23,1) 0%, transparent 100%)",
           }}
         />
-      </div>
-
-      {/* Theme toggle */}
-      <div className="absolute top-6 right-6 z-20 sm:top-8 sm:right-8">
-        <ThemeToggle />
       </div>
 
       <div className="relative mx-auto max-w-5xl px-6 lg:px-8">

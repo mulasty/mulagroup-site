@@ -159,31 +159,13 @@ export default function AIChatTerminal() {
   >([]);
   const [showCursor, setShowCursor] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const startedRef = useRef(false);
 
-  /* Intersection trigger */
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !startedRef.current) {
-          startedRef.current = true;
-          runScript();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  /* Cursor blink */
-  useEffect(() => {
-    const id = setInterval(() => setShowCursor((p) => !p), 530);
-    return () => clearInterval(id);
-  }, []);
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   async function runScript() {
     for (const msg of SCRIPT) {
@@ -253,17 +235,38 @@ export default function AIChatTerminal() {
     setIsDone(true);
   }
 
-  function sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  /* Intersection trigger */
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !startedRef.current) {
+          startedRef.current = true;
+          setHasStarted(true);
+          runScript();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /* Cursor blink */
+  useEffect(() => {
+    const id = setInterval(() => setShowCursor((p) => !p), 530);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div
       ref={containerRef}
-      className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-black/50 shadow-2xl shadow-black/60 backdrop-blur-2xl"
+      className="relative overflow-hidden rounded-2xl border border-slate-600 bg-slate-800/80 shadow-xl shadow-slate-300/30 backdrop-blur-2xl dark:border-white/[0.06] dark:bg-black/50 dark:shadow-black/60"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/[0.06] bg-white/[0.02] px-5 py-3">
+      <div className="flex items-center justify-between border-b border-slate-300 bg-slate-200/40 px-5 py-3 dark:border-white/[0.06] dark:bg-white/[0.02]">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <span className="h-3 w-3 rounded-full bg-red-400/80" />
@@ -284,11 +287,11 @@ export default function AIChatTerminal() {
           if (line.type === "divider") {
             return (
               <div key={i} className="flex items-center gap-3 py-1">
-                <div className="h-px flex-1 bg-white/[0.06]" />
+                <div className="h-px flex-1 bg-slate-300 dark:bg-white/[0.06]" />
                 <span className="shrink-0 text-[10px] uppercase tracking-widest text-slate-500">
                   {line.content}
                 </span>
-                <div className="h-px flex-1 bg-white/[0.06]" />
+                <div className="h-px flex-1 bg-slate-300 dark:bg-white/[0.06]" />
               </div>
             );
           }
@@ -311,7 +314,7 @@ export default function AIChatTerminal() {
                   {agent.name}
                 </div>
                 <div
-                  className={`rounded-lg border border-white/[0.05] bg-white/[0.03] px-4 py-3 ${
+                  className={`rounded-lg border border-slate-200 bg-slate-100/40 px-4 py-3 dark:border-white/[0.05] dark:bg-white/[0.03] ${
                     line.type === "code" ? "overflow-x-auto" : ""
                   }`}
                 >
@@ -323,7 +326,7 @@ export default function AIChatTerminal() {
         })}
 
         {/* Cursor */}
-        {!isDone && startedRef.current && (
+        {!isDone && hasStarted && (
           <span
             className={`inline-block h-[1.1em] w-2 bg-cyan-400 ${showCursor ? "opacity-100" : "opacity-0"}`}
           />
@@ -350,22 +353,22 @@ function JsonBlock({ data }: { data: Record<string, string | number | boolean> }
   const entries = Object.entries(data);
   return (
     <pre className="text-[11px]">
-      <span className="text-slate-500">{"{"}</span>
+      <span className="text-slate-500">&#123;</span>
       {entries.map(([k, v], i) => (
         <div key={k} className="pl-4">
-          <span className="text-violet-400">"{k}"</span>
+          <span className="text-violet-400">&quot;{k}&quot;</span>
           <span className="text-slate-500">: </span>
           {typeof v === "boolean" ? (
             <span className="text-amber-400">{String(v)}</span>
           ) : typeof v === "number" ? (
             <span className="text-cyan-400">{v}</span>
           ) : (
-            <span className="text-emerald-400">"{v}"</span>
+            <span className="text-emerald-400">&quot;{v}&quot;</span>
           )}
           {i < entries.length - 1 && <span className="text-slate-500">,</span>}
         </div>
       ))}
-      <span className="text-slate-500">{"}"}</span>
+      <span className="text-slate-500">&#125;</span>
     </pre>
   );
 }
@@ -396,7 +399,7 @@ function highlightTerraform(code: string) {
       const parts: React.ReactNode[] = [];
       const stringRegex = /"([^"]*)"/g;
       let lastIndex = 0;
-      let match;
+      let match: RegExpExecArray | null;
       while ((match = stringRegex.exec(line)) !== null) {
         if (match.index > lastIndex) {
           parts.push(
@@ -405,7 +408,7 @@ function highlightTerraform(code: string) {
         }
         parts.push(
           <span key={match.index} className="text-emerald-400">
-            "{match[1]}"
+            &quot;{match[1]}&quot;
           </span>
         );
         lastIndex = match.index + match[0].length;

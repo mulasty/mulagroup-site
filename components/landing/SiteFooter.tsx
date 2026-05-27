@@ -7,6 +7,10 @@ export default function SiteFooter() {
           <span className="text-sm font-semibold text-slate-600 dark:text-slate-300">Mula Group</span>
         </div>
         <div className="flex items-center gap-6">
+          <a href="/polityka-prywatnosci" className="text-[11px] text-slate-400 transition-colors hover:text-slate-700 dark:text-slate-600 dark:hover:text-slate-300">
+            Polityka prywatności
+          </a>
+          <span className="h-3 w-px bg-slate-300 dark:bg-white/[0.06]" />
           <a href="mailto:hello@mulagroup.com" className="text-[11px] text-slate-400 transition-colors hover:text-slate-700 dark:text-slate-600 dark:hover:text-slate-300">
             hello@mulagroup.com
           </a>
