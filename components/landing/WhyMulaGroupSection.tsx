@@ -19,7 +19,7 @@ export default function WhyMulaGroupSection() {
           <source src="/ai-business.mp4" type="video/mp4" />
         </video>
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-slate-950/75" />
+        <div className="absolute inset-0 bg-slate-950/85" />
       </div>
 
       {/* Top separator */}
@@ -31,7 +31,7 @@ export default function WhyMulaGroupSection() {
           <h2 id="why-heading" className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem]">
             Dlaczego Mula Group
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-slate-300">
+          <p className="mt-5 max-w-2xl mx-auto text-lg leading-relaxed text-white/90">
             Mula Group łączy technologię, automatyzację, myślenie bezpieczeństwa i
             operacje biznesowe w jeden praktyczny model dostarczania wartości.
           </p>
@@ -49,7 +49,7 @@ export default function WhyMulaGroupSection() {
                 <LandingIcon name={card.icon} />
               </div>
               <h3 className="mb-2.5 text-base font-semibold tracking-tight text-white">{card.title}</h3>
-              <p className="text-sm leading-relaxed text-slate-400">{card.description}</p>
+              <p className="text-sm leading-relaxed text-white/70">{card.description}</p>
             </div>
           ))}
         </div>
@@ -60,12 +60,12 @@ export default function WhyMulaGroupSection() {
           <div className="rounded-2xl border border-white/[0.10] bg-slate-900/40 p-10 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.04]">
             <div className="mb-8 flex items-center gap-3">
               <div className="h-2 w-2 rounded-full bg-slate-500" />
-              <h3 className="text-sm font-semibold text-slate-400">Standardowa agencja</h3>
+              <h3 className="text-sm font-semibold text-white/60">Standardowa agencja</h3>
             </div>
             <ul className="space-y-5">
               {comparisonGeneric.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm text-slate-500">
-                  <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-slate-500 ring-1 ring-white/[0.10]">
+                <li key={item} className="flex items-start gap-3 text-sm text-white/50">
+                  <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-white/40 ring-1 ring-white/[0.10]">
                     <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 6 6 18M6 6l12 12" />
                     </svg>
